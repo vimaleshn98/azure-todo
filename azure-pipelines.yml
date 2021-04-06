@@ -28,7 +28,7 @@ steps:
     repository: 'todo-app'
     command: 'buildAndPush'
     Dockerfile: 'app/Dockerfile'
-    tags: '${version}'
+    tags: '$(version)'
 - task: CmdLine@2
   inputs:
     script: 'sed -i ''s/tagVersion/$(version)/g'' k8s/api-deployment.ymal'
