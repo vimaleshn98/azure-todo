@@ -24,10 +24,11 @@ steps:
     sonarQubeRunAnalysis: false
 - task: Docker@2
   inputs:
-    containerRegistry: 'azure-registry'
+    containerRegistry: 'docker-hub'
     repository: 'todo-app'
     command: 'buildAndPush'
     Dockerfile: 'app/Dockerfile'
+    
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'k8s/database-deployment.yaml'
