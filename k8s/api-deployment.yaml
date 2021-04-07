@@ -19,7 +19,7 @@ spec:
         env:
           - name: MYSQL_DB_HOST
             value: mysql:3306
-        image: vimaleshcontainer73.azurecr.io/todo-app:tagVersion
+        image: vimaleshcontainer73.azurecr.io/todo-app:1.44
         resources:
             requests:
               cpu: 100m
