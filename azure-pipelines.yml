@@ -29,9 +29,6 @@ steps:
     command: 'buildAndPush'
     Dockerfile: 'app/Dockerfile'
     tags: '$(version)'
-- task: CmdLine@2
-  inputs:
-    script: 'sed -i ''s/tagVersion/$(version)/g'' k8s/api-deployment.yaml'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'k8s/database-deployment.yaml'
