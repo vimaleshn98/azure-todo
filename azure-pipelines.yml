@@ -25,7 +25,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'docker-hub'
-    repository: 'todo-app'
+    repository: '7349216534/todo-app-java'
     command: 'buildAndPush'
     Dockerfile: 'app/Dockerfile'
     tags: '$(version)'
