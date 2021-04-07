@@ -24,8 +24,8 @@ steps:
     sonarQubeRunAnalysis: false
 - task: Docker@2
   inputs:
-    containerRegistry: 'docker-hub'
-    repository: '7349216534/todo-app-java'
+    containerRegistry: 'azure-registry'
+    repository: 'todo-app'
     command: 'buildAndPush'
     Dockerfile: 'app/Dockerfile'
     tags: '$(version)'
