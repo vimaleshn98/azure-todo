@@ -127,6 +127,7 @@ pipeline{
                
                     sh 'docker image prune -a --force'
                     sh 'docker-compose build'
+                    sh 'docker ps'
                 
                 
             }
