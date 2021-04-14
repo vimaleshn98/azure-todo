@@ -84,7 +84,7 @@ stage("build"){
             }
             
         }
-        ![image](https://user-images.githubusercontent.com/52690867/114670001-2cbc8a00-9d20-11eb-9680-0c6f81110aae.png)
+  ![image](https://user-images.githubusercontent.com/52690867/114670001-2cbc8a00-9d20-11eb-9680-0c6f81110aae.png)
         confiuration on jenkins
         
         sonar cloud :
@@ -95,8 +95,7 @@ stage("build"){
         4 .artifacte creation:
           jforg create one repo their.
           https://my.jfrog.com/login
-          
-          ![image](https://user-images.githubusercontent.com/52690867/114670396-90df4e00-9d20-11eb-87c0-1bbdcf0d9fe9.png)
+ ![image](https://user-images.githubusercontent.com/52690867/114670396-90df4e00-9d20-11eb-87c0-1bbdcf0d9fe9.png)
            stage("Deployee"){
            when {
                 expression {
