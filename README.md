@@ -219,7 +219,7 @@ stage("build"){
         
         
         add kube config file on creadential and try use some more cmd on that.
-        
-        
-        
-
+  in jforg:
+![image](https://user-images.githubusercontent.com/52690867/114672800-2845a080-9d23-11eb-8a3f-5b04f2150884.png)
+Goto Repository -> repository -> create new repo -> selectet maven -> given proper naming convention.
+create
