@@ -94,7 +94,7 @@ stage("build"){
         
         4 .artifacte creation:
           jforg create one repo their.
-          
+          https://my.jfrog.com/login
           
           ![image](https://user-images.githubusercontent.com/52690867/114670396-90df4e00-9d20-11eb-87c0-1bbdcf0d9fe9.png)
            stage("Deployee"){
