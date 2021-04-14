@@ -141,7 +141,7 @@ pipeline{
                    sh "docker login -u 7349216534 -p ${dockerHubPWD}"
 
                 }
-                sh "docker commit cisample_app_1 7349216534/todo-app:v${env.BUILD_ID}"
+                sh "docker image tag todocicd_app:latest 7349216534/todo-app:v${env.BUILD_ID}"
                 sh "docker push 7349216534/todo-app:v${env.BUILD_ID}"
 
             }
