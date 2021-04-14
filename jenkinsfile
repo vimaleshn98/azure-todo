@@ -5,55 +5,119 @@ pipeline{
        jdk 'JDK11'
    }
     stages{
-        stage('Fetch project from github'){
+        stage("build"){
             steps{
-                git branch: 'master', url: 'https://github.com/sujjadshaik/todo-app.git'
+                sh 'mvn clean'
+                sh 'mvn -f app/pom.xml compile'
             }
-                
-        }
-        stage('Maven package'){
-            steps{
-                sh 'mvn -f app/pom.xml package'
-
-            }
-        }
-        stage('sonar analysis'){
-            steps{
-                withSonarQubeEnv('sonarQube'){
-                    sh 'mvn -f app/pom.xml sonar:sonar'
+            post{
+                success{
+                    echo "========Maven compile stage executed successfully========"
+                }
+                failure{
+                    echo "========Maven compile stage execution failed========"
                 }
             }
         }
-        stage('deploy to artifactor'){
+    
+     stage("Test"){
             steps{
-                rtUpload (
-            serverId: 'ARTIFACTORY-SERVER',
-            spec: '''{
-                 "files": [
-                             {
-                                "pattern": "app/target/*.war",
-                                "target": "art-doc-dev-loc/todo-app/"
-                            }
-                        ]
-            }''',
-            )
+                echo "Maven Test"
+                sh 'mvn -f app/pom.xml -Dmaven.test.failure.ignore=true  test'
+                
+            }
+            post{
+                success{
+                    echo "========Maven Test stage executed successfully========"
+                     junit 'app/target/surefire-reports/*.xml'
 
+                }
+                failure{
+                    echo "========Maven Test stage execution failed========"
+                     junit 'app/target/surefire-reports/*.xml'
+                }
             }
         }
-        stage('download artifact'){
+       stage('sonar analysis'){
+            agent any
             steps{
-                 rtDownload (
-                 serverId: "ARTIFACTORY-SERVER",
-                spec:"""{
-                     "files": [
-                                {
-                                    "pattern": "art-doc-dev-loc/todo-app/**",
-                                    "target": "app/artifacts/"      
-                                }
-                            ]
-              }"""
-            )
+                withSonarQubeEnv('sonarcloud'){
+                    echo 'Performing SonarQube Analysis'
+                    sh 'mvn -f app/pom.xml package sonar:sonar'
+                }
+            }
+            post{
+                success{
+                    echo "========Code Analysis stage executed successfully========"
+
+                }
+                failure{
+                    echo "========Code Analysis stage execution failed========"
+                }
+            }
             
+        }
+        stage("Deployee"){
+           when {
+                expression {
+                        currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+                steps{
+     
+                     rtUpload (
+                         serverId: 'artifactory-server',
+                     spec: """{
+                             "files": [
+                                      {
+                                     "pattern": "/var/lib/jenkins/workspace/TodoApp@2/app/target/*.war",
+                                     "target": "art-doc-dev-locs/${env.BUILD_NUMBER}/"
+                                    }
+                                ]
+                            }"""
+                        )
+                    }
+            post{
+                success{
+                    echo "========Deploying executed successfully========"
+
+                }
+                
+                failure{
+                    echo "========Deploying stage execution failed========"
+                }
+            }
+        }    
+        stage("Download"){
+           when {
+                expression {
+                        currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+                steps{
+                     
+            rtDownload (
+                         serverId: 'artifactory-server',
+                     spec: """{
+                             "files": [
+                                      {
+                                      "pattern": "art-doc-dev-locs/${env.BUILD_NUMBER}/*.war",
+                                      "target": "app/"
+                                    }
+                                ]
+                            }"""
+                        )
+                    }
+            post{
+                success{
+                    echo "========Download executed successfully ========"
+                    // sshagent(['ubuntu2']){
+                    // sh 'scp -r bazinga/*.jar ubuntu@18.236.173.67:/home/ubuntu/artifacts'
+                    }
+                
+                failure{
+                    echo "========Download stage execution failed========"
+                }
             }
         }
 
@@ -73,11 +137,11 @@ pipeline{
 
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPWD')]) {
                             // some block
-                   sh "docker login -u sujjad -p ${dockerHubPWD}"
+                   sh "docker login -u 7349216534 -p ${dockerHubPWD}"
 
                 }
-                sh "docker commit cisample_app_1 sujjad/todo-app:v${env.BUILD_ID}"
-                sh "docker push sujjad/todo-app:v${env.BUILD_ID}"
+                sh "docker commit cisample_app_1 7349216534/todo-app:v${env.BUILD_ID}"
+                sh "docker push 7349216534/todo-app:v${env.BUILD_ID}"
 
             }
         }
