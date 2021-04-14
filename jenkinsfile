@@ -135,7 +135,7 @@ pipeline{
             steps{
                 
 
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPWD')]) {
+                withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerHubPWD')]) {
                             // some block
                    sh "docker login -u 7349216534 -p ${dockerHubPWD}"
 
