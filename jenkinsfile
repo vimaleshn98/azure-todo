@@ -151,11 +151,11 @@ pipeline{
                 sh 'chmod +x change-tag.sh'
                 sh """./change-tag.sh v${env.BUILD_ID}"""
                 sh 'cat k8s/api-deployment.yaml'
-                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-aks', namespace: '', serverUrl: 'end-to-end-k8s-dns-db7293cf.hcp.westus2.azmk8s.io:443') {
+                //withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-aks', namespace: '', serverUrl: 'end-to-end-k8s-dns-db7293cf.hcp.westus2.azmk8s.io:443') {
                                 // some block
                     sh 'kubectl apply -f k8s/database-deployment.yaml'
                     
-                }
+                //}
                 sleep(120)
                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-aks', namespace: '', serverUrl: 'end-to-end-k8s-dns-db7293cf.hcp.westus2.azmk8s.io:443') {
                                 // some block
