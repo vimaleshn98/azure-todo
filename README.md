@@ -222,3 +222,7 @@ stage("build"){
 ![image](https://user-images.githubusercontent.com/52690867/114672800-2845a080-9d23-11eb-8a3f-5b04f2150884.png)
 Goto Repository -> repository -> create new repo -> selectet maven -> given proper naming convention.
 create
+
+
+azure cluster creation:
+az aks get-credentials --resource-group end-to-end --name end-to-end-k8s
