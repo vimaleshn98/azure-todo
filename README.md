@@ -226,3 +226,6 @@ create
 
 azure cluster creation:
 az aks get-credentials --resource-group end-to-end --name end-to-end-k8s
+
+![image](https://user-images.githubusercontent.com/52690867/115217963-ad65f680-a123-11eb-8549-805b743f9989.png)
+
